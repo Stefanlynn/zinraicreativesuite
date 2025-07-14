@@ -53,9 +53,37 @@ The backend provides RESTful endpoints for:
 
 1. **Content Discovery**: Users browse content through category tabs or search
 2. **Content Filtering**: Frontend sends requests to `/api/content` with query parameters
-3. **Content Download**: Users trigger downloads which are tracked in the database
-4. **Project Requests**: Users submit custom project requests through a comprehensive form
-5. **File Handling**: Reference files can be uploaded as part of project requests
+3. **Content Access**: Users click "Get File" to open external links (Dropbox/Google Drive) in new tabs
+4. **Download Tracking**: File access is tracked in the database for analytics
+5. **Project Requests**: Users submit custom project requests through a comprehensive form
+6. **File Handling**: Reference files can be uploaded as part of project requests
+7. **Admin Management**: Admins can add, edit, and delete content items with external file URLs
+
+## Admin Dashboard
+
+### Authentication
+- Simple session-based authentication system
+- Demo credentials: admin/admin123
+- Session tokens stored in localStorage
+- Admin routes protected with middleware
+
+### Content Management
+- Add new assets with external file URLs (Dropbox/Google Drive links)
+- Edit existing content items (title, description, category, type, URLs)
+- Delete content items with confirmation
+- Toggle featured status for content
+- Real-time stats dashboard showing total assets, downloads, and project requests
+
+### Project Request Management
+- View all submitted project requests
+- Monitor request status and details
+- Access user contact information and project descriptions
+
+### External File Integration
+- Content items link to external files (Dropbox, Google Drive, etc.)
+- Users click "Get File" to open files in new tabs
+- No actual file hosting - all files are external links
+- Download tracking still works for analytics
 
 ## External Dependencies
 

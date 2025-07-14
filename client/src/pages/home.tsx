@@ -28,26 +28,27 @@ export default function Home() {
 
   const handleDownload = async (item: ContentItem) => {
     try {
-      const response = await apiRequest('POST', `/api/content/${item.id}/download`);
-      const data = await response.json();
-      
-      toast({
-        title: "Download Started",
-        description: `${item.title} is being downloaded.`,
+      // Track the download
+      await fetch(`/api/content/${item.id}/download`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
       
-      // Create a temporary link to trigger download
-      const link = document.createElement('a');
-      link.href = data.fileUrl;
-      link.download = data.fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
+      // Open the external link in a new tab
+      window.open(item.fileUrl, '_blank');
+      
       toast({
-        title: "Download Failed",
-        description: "There was an error downloading the file. Please try again.",
-        variant: "destructive",
+        title: "Opening file",
+        description: `${item.title} is opening in a new tab`,
+      });
+    } catch (error) {
+      // Even if tracking fails, still open the file
+      window.open(item.fileUrl, '_blank');
+      toast({
+        title: "Opening file",
+        description: `${item.title} is opening in a new tab`,
       });
     }
   };
@@ -107,12 +108,21 @@ export default function Home() {
                 <p className="text-xs text-zinrai-muted">Live With Passion. Lead With Purpose.</p>
               </div>
             </div>
-            <Button 
-              onClick={() => document.getElementById('request')?.scrollIntoView({ behavior: 'smooth' })}
-              className="secondary-btn"
-            >
-              Request Project
-            </Button>
+            <div className="flex items-center gap-4">
+              <Button 
+                onClick={() => document.getElementById('request')?.scrollIntoView({ behavior: 'smooth' })}
+                className="secondary-btn"
+              >
+                Request Project
+              </Button>
+              <Button 
+                onClick={() => window.location.href = '/admin/login'}
+                variant="ghost"
+                className="text-xs text-zinrai-muted hover:text-zinrai-accent"
+              >
+                Admin
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -230,7 +240,7 @@ export default function Home() {
                         className="primary-btn text-sm"
                       >
                         <Download className="h-4 w-4 mr-2" />
-                        Download
+                        Get File
                       </Button>
                     </div>
                   </div>

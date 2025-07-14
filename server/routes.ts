@@ -1,10 +1,132 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProjectRequestSchema, insertDownloadSchema } from "@shared/schema";
+import { insertProjectRequestSchema, insertDownloadSchema, insertContentItemSchema } from "@shared/schema";
 import { z } from "zod";
 
+// Simple session store for admin auth
+const adminSessions = new Map<string, { userId: number; expires: Date }>();
+
+// Generate simple session ID
+function generateSessionId(): string {
+  return Math.random().toString(36).substr(2, 9);
+}
+
+// Middleware to check admin auth
+const requireAdmin = async (req: any, res: any, next: any) => {
+  const sessionId = req.headers.authorization?.replace('Bearer ', '');
+  
+  if (!sessionId) {
+    return res.status(401).json({ message: "No session token provided" });
+  }
+  
+  const session = adminSessions.get(sessionId);
+  if (!session || session.expires < new Date()) {
+    adminSessions.delete(sessionId);
+    return res.status(401).json({ message: "Invalid or expired session" });
+  }
+  
+  const user = await storage.getUser(session.userId);
+  if (!user || !user.isAdmin) {
+    return res.status(403).json({ message: "Admin access required" });
+  }
+  
+  req.adminUser = user;
+  next();
+};
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Admin authentication routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password required" });
+      }
+      
+      const user = await storage.authenticateUser(username, password);
+      if (!user || !user.isAdmin) {
+        return res.status(401).json({ message: "Invalid credentials or not an admin" });
+      }
+      
+      // Create session
+      const sessionId = generateSessionId();
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+      adminSessions.set(sessionId, { userId: user.id, expires: expiresAt });
+      
+      res.json({ 
+        token: sessionId,
+        user: { id: user.id, username: user.username, isAdmin: user.isAdmin }
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Authentication failed" });
+    }
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    const sessionId = req.headers.authorization?.replace('Bearer ', '');
+    if (sessionId) {
+      adminSessions.delete(sessionId);
+    }
+    res.json({ message: "Logged out successfully" });
+  });
+
+  // Admin content management routes
+  app.post("/api/admin/content", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertContentItemSchema.parse(req.body);
+      const item = await storage.createContentItem(validatedData);
+      res.json(item);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      res.status(500).json({ message: "Failed to create content item" });
+    }
+  });
+
+  app.put("/api/admin/content/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      const item = await storage.updateContentItem(id, updates);
+      
+      if (!item) {
+        return res.status(404).json({ message: "Content item not found" });
+      }
+      
+      res.json(item);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update content item" });
+    }
+  });
+
+  app.delete("/api/admin/content/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteContentItem(id);
+      
+      if (!success) {
+        return res.status(404).json({ message: "Content item not found" });
+      }
+      
+      res.json({ message: "Content item deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete content item" });
+    }
+  });
+
+  app.get("/api/admin/project-requests", requireAdmin, async (req, res) => {
+    try {
+      const requests = await storage.getProjectRequests();
+      res.json(requests);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch project requests" });
+    }
+  });
+
+  // Public content routes
   // Get all content items or filter by category
   app.get("/api/content", async (req, res) => {
     try {

@@ -18,6 +18,7 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  authenticateUser(username: string, password: string): Promise<User | null>;
   
   // Content operations
   getContentItems(category?: string): Promise<ContentItem[]>;
@@ -64,6 +65,15 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
+    // Initialize with admin user
+    const adminUser: User = {
+      id: this.currentUserId++,
+      username: "admin",
+      password: "admin123", // In production, this should be hashed
+      isAdmin: true
+    };
+    this.users.set(adminUser.id, adminUser);
+    
     // Initialize with sample content items
     const sampleItems: Omit<ContentItem, 'id'>[] = [
       {
@@ -240,9 +250,17 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentUserId++;
-    const user: User = { ...insertUser, id };
+    const user: User = { ...insertUser, id, isAdmin: false };
     this.users.set(id, user);
     return user;
+  }
+
+  async authenticateUser(username: string, password: string): Promise<User | null> {
+    const user = Array.from(this.users.values()).find(u => u.username === username);
+    if (user && user.password === password) {
+      return user;
+    }
+    return null;
   }
 
   async getContentItems(category?: string): Promise<ContentItem[]> {
