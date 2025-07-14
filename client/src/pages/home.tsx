@@ -166,7 +166,7 @@ export default function Home() {
           
           <div className="hero-video mb-16">
             <iframe
-              src="https://www.youtube.com/embed/aB19kSzMGxo?autoplay=1&mute=1&loop=1&playlist=aB19kSzMGxo&controls=0&showinfo=0&rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/vzbO82MAtWg?autoplay=1&mute=1&loop=1&playlist=vzbO82MAtWg&controls=0&showinfo=0&rel=0&modestbranding=1"
               title="ZiNRAi Creative Suite"
               className="w-full h-full"
               allow="autoplay; encrypted-media"
