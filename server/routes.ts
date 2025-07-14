@@ -117,6 +117,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/content", requireAdmin, async (req, res) => {
+    try {
+      const items = await storage.getContentItems();
+      res.json(items);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch content items" });
+    }
+  });
+
   app.get("/api/admin/project-requests", requireAdmin, async (req, res) => {
     try {
       const requests = await storage.getProjectRequests();

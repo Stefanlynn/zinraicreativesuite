@@ -70,9 +70,11 @@ export default function AdminDashboard() {
 
   // Fetch content items
   const { data: contentItems, isLoading: contentLoading } = useQuery({
-    queryKey: ['/api/content'],
+    queryKey: ['/api/admin/content'],
     queryFn: async () => {
-      const response = await apiRequest('/api/content');
+      const response = await apiRequest('/api/admin/content', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return response as ContentItem[];
     },
   });
@@ -97,7 +99,7 @@ export default function AdminDashboard() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/content'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/content'] });
       toast({
         title: "Success",
         description: "Content item created successfully",
@@ -124,7 +126,7 @@ export default function AdminDashboard() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/content'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/content'] });
       toast({
         title: "Success",
         description: "Content item updated successfully",
@@ -149,7 +151,7 @@ export default function AdminDashboard() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/content'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/content'] });
       toast({
         title: "Success",
         description: "Content item deleted successfully",

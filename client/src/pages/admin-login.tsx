@@ -132,7 +132,7 @@ export default function AdminLogin() {
         </div>
 
         <div className="mt-6 text-center text-sm text-zinrai-muted">
-          <p>Demo credentials: admin / admin123</p>
+          <p>Demo credentials: andre.butler@zinrai.com / 6September2008</p>
         </div>
       </div>
     </div>
