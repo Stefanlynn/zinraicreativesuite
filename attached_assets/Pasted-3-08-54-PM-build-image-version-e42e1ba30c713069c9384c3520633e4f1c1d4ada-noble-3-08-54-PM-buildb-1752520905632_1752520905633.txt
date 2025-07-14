@@ -1,0 +1,139 @@
+3:08:54 PM: build-image version: e42e1ba30c713069c9384c3520633e4f1c1d4ada (noble)
+3:08:54 PM: buildbot version: e42e1ba30c713069c9384c3520633e4f1c1d4ada
+3:08:54 PM: Fetching cached dependencies
+3:08:54 PM: Failed to fetch cache, continuing with build
+3:08:54 PM: Starting to prepare the repo for build
+3:08:54 PM: No cached dependencies found. Cloning fresh repo
+3:08:54 PM: git clone --filter=blob:none https://github.com/Stefanlynn/zinraicreativesuite
+3:08:54 PM: Preparing Git Reference refs/heads/main
+3:08:56 PM: Starting to install dependencies
+3:08:56 PM: Using PHP version
+3:08:57 PM: v22.17.0 is already installed.
+3:08:57 PM: Now using node v22.17.0 (npm v10.9.2)
+3:08:57 PM: Enabling Node.js Corepack
+3:08:57 PM: Started restoring cached build plugins
+3:08:57 PM: Finished restoring cached build plugins
+3:08:57 PM: Started restoring cached corepack dependencies
+3:08:57 PM: Finished restoring cached corepack dependencies
+3:08:57 PM: No npm workspaces detected
+3:08:57 PM: Started restoring cached node modules
+3:08:57 PM: Finished restoring cached node modules
+3:08:57 PM: Installing npm packages using npm version 10.9.2
+3:09:00 PM: npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+3:09:00 PM: npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+3:09:03 PM: added 499 packages in 6s
+3:09:03 PM: npm packages installed
+3:09:04 PM: Successfully installed dependencies
+3:09:04 PM: Starting build script
+3:09:04 PM: Detected 1 framework(s)
+3:09:04 PM: "vite" at version "5.4.19"
+3:09:04 PM: Section completed: initializing
+3:09:06 PM: ​
+3:09:06 PM: Netlify Build                                                 
+3:09:06 PM: ────────────────────────────────────────────────────────────────
+3:09:06 PM: ​
+3:09:06 PM: ❯ Version
+3:09:06 PM:   @netlify/build 34.2.4
+3:09:06 PM: ​
+3:09:06 PM: ❯ Flags
+3:09:06 PM:   accountId: 680ec3270cf9b7e4938d6f0d
+3:09:06 PM:   baseRelDir: true
+3:09:06 PM:   buildId: 687555c562a412bf5ae81669
+3:09:06 PM:   deployId: 687555c562a412bf5ae8166b
+3:09:06 PM: ​
+3:09:06 PM: ❯ Current directory
+3:09:06 PM:   /opt/build/repo
+3:09:06 PM: ​
+3:09:06 PM: ❯ Config file
+3:09:06 PM:   No config file was defined: using default values.
+3:09:06 PM: ​
+3:09:06 PM: ❯ Context
+3:09:06 PM:   production
+3:09:06 PM: ​
+3:09:06 PM: ❯ Installing extensions
+3:09:06 PM:    - neon
+3:09:58 PM: ​
+3:09:58 PM: ❯ Loading extensions
+3:09:58 PM:    - neon
+3:09:59 PM: ​
+3:09:59 PM: Build command from Netlify app                                
+3:09:59 PM: ────────────────────────────────────────────────────────────────
+3:09:59 PM: ​
+3:09:59 PM: $ npm run build
+3:09:59 PM: > rest-express@1.0.0 build
+3:09:59 PM: > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+3:09:59 PM: vite v5.4.19 building for production...
+3:10:01 PM: transforming...
+3:10:01 PM: Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+3:10:01 PM:   npx update-browserslist-db@latest
+3:10:01 PM:   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+3:10:04 PM: ✓ 1723 modules transformed.
+3:10:04 PM: rendering chunks...
+3:10:04 PM: computing gzip size...
+3:10:04 PM: ../dist/public/index.html                   0.63 kB │ gzip:   0.38 kB
+3:10:04 PM: ../dist/public/assets/index-DvvHbT3q.css   67.81 kB │ gzip:  11.83 kB
+3:10:04 PM: ../dist/public/assets/index-C_FQuadF.js   448.54 kB │ gzip: 137.21 kB
+3:10:04 PM: ✓ built in 3.95s
+3:10:05 PM: Post processing - redirect rules
+3:10:05 PM: Post processing done
+3:10:05 PM: Section completed: postprocessing
+3:10:05 PM: Starting post processing
+3:10:05 PM: Skipping form detection
+3:10:05 PM: Post processing - header rules
+3:10:05 PM:   dist/index.js  19.0kb
+3:10:05 PM: ⚡ Done in 29ms
+3:10:05 PM: ​
+3:10:05 PM: (build.command completed in 5.9s)
+3:10:05 PM: ​
+3:10:05 PM: Scanning for secrets in code and build output.                
+3:10:05 PM: ────────────────────────────────────────────────────────────────
+3:10:05 PM: ​
+3:10:05 PM: Secrets scanning complete. 91 file(s) scanned. No secrets detected in build output or repo code!
+3:10:05 PM: ​
+3:10:05 PM: (Secrets scanning completed in 359ms)
+3:10:05 PM: ​
+3:10:05 PM: Deploy site                                                   
+3:10:05 PM: ────────────────────────────────────────────────────────────────
+3:10:05 PM: ​
+3:10:05 PM: Starting to deploy site from 'dist'
+3:10:05 PM: Calculating files to upload
+3:10:05 PM: 4 new file(s) to upload
+3:10:05 PM: 0 new function(s) to upload
+3:10:05 PM: Section completed: deploying
+3:10:05 PM: Site deploy was successfully initiated
+3:10:05 PM: ​
+3:10:05 PM: (Deploy site completed in 240ms)
+3:10:06 PM: Site is live ✨
+3:10:06 PM: ​
+3:10:06 PM: Netlify Build Complete                                        
+3:10:06 PM: ────────────────────────────────────────────────────────────────
+3:10:06 PM: ​
+3:10:06 PM: (Netlify Build completed in 59.9s)
+3:10:06 PM: Caching artifacts
+3:10:06 PM: Started saving node modules
+3:10:06 PM: Finished saving node modules
+3:10:06 PM: Started saving build plugins
+3:10:06 PM: Finished saving build plugins
+3:10:06 PM: Started saving bun cache
+3:10:07 PM: Finished saving bun cache
+3:10:07 PM: Started saving go cache
+3:10:10 PM: Finished saving go cache
+3:10:10 PM: Started saving python cache
+3:10:17 PM: Finished saving python cache
+3:10:17 PM: Started saving ruby cache
+3:10:35 PM: Finished saving ruby cache
+3:10:35 PM: Started saving corepack cache
+3:10:35 PM: Finished saving corepack cache
+3:10:35 PM: Started saving emacs cask dependencies
+3:10:35 PM: Finished saving emacs cask dependencies
+3:10:35 PM: Started saving maven dependencies
+3:10:35 PM: Finished saving maven dependencies
+3:10:35 PM: Started saving boot dependencies
+3:10:35 PM: Finished saving boot dependencies
+3:10:35 PM: Started saving rust rustup cache
+3:10:35 PM: Finished saving rust rustup cache
+3:10:35 PM: Build script success
+3:10:35 PM: Section completed: building
+3:10:56 PM: Uploading Cache of size 343.2MB
+3:10:57 PM: Section completed: cleanup
+3:10:57 PM: Finished processing build request in 2m3.238s

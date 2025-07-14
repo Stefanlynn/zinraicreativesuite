@@ -85,12 +85,36 @@ The application uses in-memory storage which means:
 3. Configure DNS settings as instructed
 4. SSL certificate will be automatically provisioned
 
-## Troubleshooting
+## Current Status
+
+Your Netlify site is currently showing a 404 error, which indicates the build process is failing. Here's how to fix it:
+
+### Fix Steps Required:
+
+1. **Check Build Logs**: Go to your Netlify dashboard → Site settings → Build & deploy → Build logs
+2. **Common Issues**:
+   - Build timeout (Vite build taking too long)
+   - Missing dependencies
+   - Node version mismatch
+
+### Immediate Solutions:
+
+**Option 1: Use Faster Build**
+```bash
+# In netlify.toml, change the build command to:
+command = "npm run build && mkdir -p dist/functions && cp netlify/functions/api.ts dist/functions/api.js"
+```
+
+**Option 2: Push Latest Changes**
+The current build script has been updated with verification steps. Push your latest changes to trigger a new build.
+
+### Troubleshooting
 
 ### Build Fails
 - Check the build logs in Netlify dashboard
 - Ensure all dependencies are in `package.json`
 - Verify the build script has execute permissions
+- If build times out, try reducing bundle size or using simpler build commands
 
 ### Functions Not Working
 - Check function logs in Netlify dashboard
