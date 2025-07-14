@@ -85,28 +85,34 @@ The application uses in-memory storage which means:
 3. Configure DNS settings as instructed
 4. SSL certificate will be automatically provisioned
 
-## Current Status
+## Current Status - IDENTIFIED ISSUE
 
-Your Netlify site is currently showing a 404 error, which indicates the build process is failing. Here's how to fix it:
+Your Netlify site is showing a 404 error because **Netlify is not detecting the `netlify.toml` configuration file**.
 
-### Fix Steps Required:
+### Root Cause:
+The build logs show "No config file was defined: using default values" - this means Netlify is using:
+- Build command: `npm run build` (correct)
+- Publish directory: `dist` (WRONG - should be `dist/public`)
+- Functions: Not deployed
 
-1. **Check Build Logs**: Go to your Netlify dashboard → Site settings → Build & deploy → Build logs
-2. **Common Issues**:
-   - Build timeout (Vite build taking too long)
-   - Missing dependencies
-   - Node version mismatch
+### Immediate Fix Required:
 
-### Immediate Solutions:
+Go to your Netlify dashboard and manually configure the build settings:
 
-**Option 1: Use Faster Build**
+1. **Log into Netlify Dashboard**
+2. **Go to Site Settings → Build & Deploy**
+3. **Update Build Settings:**
+   - Build command: `npm run build`
+   - Publish directory: `dist/public`
+   - Functions directory: `dist/functions`
+
+### Alternative Solution:
+If the netlify.toml file isn't being detected, commit and push it to your repository:
 ```bash
-# In netlify.toml, change the build command to:
-command = "npm run build && mkdir -p dist/functions && cp netlify/functions/api.ts dist/functions/api.js"
+git add netlify.toml
+git commit -m "Add Netlify configuration"
+git push
 ```
-
-**Option 2: Push Latest Changes**
-The current build script has been updated with verification steps. Push your latest changes to trigger a new build.
 
 ### Troubleshooting
 
