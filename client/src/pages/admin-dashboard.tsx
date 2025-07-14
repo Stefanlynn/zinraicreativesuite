@@ -34,7 +34,6 @@ const contentItemSchema = z.object({
   category: z.enum(['general', 'social-media', 'field-tools', 'events', 'store']),
   type: z.enum(['video', 'graphic', 'template', 'bundle', 'mockup']),
   fileUrl: z.string().url('Must be a valid URL'),
-  thumbnailUrl: z.string().url('Must be a valid URL'),
   featured: z.boolean().default(false),
 });
 
@@ -44,9 +43,7 @@ export default function AdminDashboard() {
   const [location, setLocation] = useLocation();
   const [editingItem, setEditingItem] = useState<ContentItem | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
-  const [thumbnailPreview, setThumbnailPreview] = useState<string>('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -69,51 +66,12 @@ export default function AdminDashboard() {
       category: 'general',
       type: 'graphic',
       fileUrl: '',
-      thumbnailUrl: '',
       featured: false,
     },
   });
 
-  const handleThumbnailUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        toast({
-          title: "File too large",
-          description: "Please select an image smaller than 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      if (!file.type.startsWith('image/')) {
-        toast({
-          title: "Invalid file type",
-          description: "Please select an image file",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      setThumbnailFile(file);
-      
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setThumbnailPreview(result);
-        // For now, we'll use a placeholder URL in the form
-        // In a real app, you'd upload to a service like Cloudinary
-        form.setValue('thumbnailUrl', `https://placeholder.com/thumbnail-${Date.now()}.jpg`);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const resetForm = () => {
     form.reset();
-    setThumbnailFile(null);
-    setThumbnailPreview('');
     setEditingItem(null);
     setShowAddForm(false);
   };
@@ -230,7 +188,6 @@ export default function AdminDashboard() {
       category: item.category as any,
       type: item.type as any,
       fileUrl: item.fileUrl,
-      thumbnailUrl: item.thumbnailUrl,
       featured: item.featured || false,
     });
     setShowAddForm(true);
@@ -617,39 +574,7 @@ export default function AdminDashboard() {
                       )}
                     />
 
-                    <div className="space-y-2">
-                      <label className="text-white font-medium">Thumbnail Image *</label>
-                      <div className="flex items-center gap-4">
-                        <input
-                          type="file"
-                          ref={fileInputRef}
-                          onChange={handleThumbnailUpload}
-                          accept="image/*"
-                          className="hidden"
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => fileInputRef.current?.click()}
-                          className="border-zinrai-border text-zinrai-muted hover:text-zinrai-accent hover:border-zinrai-accent"
-                        >
-                          Upload Image
-                        </Button>
-                        {thumbnailFile && (
-                          <span className="text-sm text-zinrai-muted">
-                            {thumbnailFile.name}
-                          </span>
-                        )}
-                      </div>
-                      {thumbnailPreview && (
-                        <img
-                          src={thumbnailPreview}
-                          alt="Thumbnail preview"
-                          className="w-16 h-16 object-cover rounded border border-zinrai-border"
-                        />
-                      )}
-                      <p className="text-xs text-zinrai-muted">Preview image shown on the content card (64x64px on list)</p>
-                    </div>
+
 
                     <div className="flex justify-end gap-3">
                       <Button

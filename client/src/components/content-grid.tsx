@@ -144,11 +144,21 @@ export default function ContentGrid({ category, searchQuery }: ContentGridProps)
         ) : items && items.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {items.map((item) => (
-              <div key={item.id} className="content-card">
-                <div 
-                  className={`aspect-${item.type === 'video' ? 'video' : 'square'} bg-cover bg-center`}
-                  style={{ backgroundImage: `url(${item.thumbnailUrl})` }}
-                />
+              <div key={item.id} className="bg-zinrai-secondary rounded-lg overflow-hidden hover:bg-zinrai-secondary/80 transition-colors">
+                <div className="aspect-video bg-zinrai-dark flex items-center justify-center relative">
+                  <div className="text-zinrai-accent">
+                    <div className="text-6xl">
+                      {getTypeIcon(item.type)}
+                    </div>
+                  </div>
+                  {item.featured && (
+                    <div className="absolute top-2 right-2">
+                      <Badge className="bg-zinrai-accent text-zinrai-dark">
+                        Featured
+                      </Badge>
+                    </div>
+                  )}
+                </div>
                 <div className="p-4">
                   <h4 className="font-semibold mb-2 text-white">{item.title}</h4>
                   <p className="text-sm text-zinrai-muted mb-3">{item.description}</p>
@@ -161,7 +171,7 @@ export default function ContentGrid({ category, searchQuery }: ContentGridProps)
                     </Badge>
                     <Button
                       onClick={() => handleDownload(item)}
-                      className="download-btn"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-black"
                       size="sm"
                     >
                       <Download className="h-4 w-4" />

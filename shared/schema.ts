@@ -16,7 +16,7 @@ export const contentItems = pgTable("content_items", {
   category: text("category").notNull(), // social-media, field-tools, events, store
   type: text("type").notNull(), // video, graphic, template, bundle, mockup
   fileUrl: text("file_url").notNull(),
-  thumbnailUrl: text("thumbnail_url").notNull(),
+
   downloadCount: integer("download_count").default(0),
   featured: boolean("featured").default(false),
   createdAt: timestamp("created_at").defaultNow(),

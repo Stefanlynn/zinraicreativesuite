@@ -300,10 +300,11 @@ export default function Home() {
               {filteredItems.map((item) => (
                 <div key={item.id} className="bg-zinrai-surface rounded-lg p-4 border border-zinrai-border hover:border-zinrai-accent/50 transition-colors">
                   <div className="flex items-center gap-4">
-                    <div 
-                      className="w-16 h-16 bg-cover bg-center rounded-lg flex-shrink-0 border border-zinrai-border"
-                      style={{ backgroundImage: `url(${item.thumbnailUrl})` }}
-                    />
+                    <div className="w-16 h-16 bg-zinrai-dark rounded-lg flex-shrink-0 border border-zinrai-border flex items-center justify-center">
+                      <div className="text-zinrai-accent text-xl">
+                        {getTypeIcon(item.type)}
+                      </div>
+                    </div>
                     
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
@@ -333,7 +334,7 @@ export default function Home() {
                     <Button
                       onClick={() => handleDownload(item)}
                       size="sm"
-                      className="bg-white text-black hover:bg-gray-100 font-medium px-4 py-2 h-auto rounded-lg transition-colors"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-4 py-2 h-auto rounded-lg transition-colors"
                     >
                       <ExternalLink className="h-3 w-3 mr-1.5" />
                       Get File

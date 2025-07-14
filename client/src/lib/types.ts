@@ -5,7 +5,6 @@ export interface ContentItem {
   category: string;
   type: string;
   fileUrl: string;
-  thumbnailUrl: string;
   downloadCount?: number;
   featured?: boolean;
   createdAt?: Date;
