@@ -159,11 +159,11 @@
   
   /* Apple-style buttons */
   .primary-btn {
-    @apply bg-zinrai-accent text-zinrai-dark px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition-all duration-200 hover:scale-105;
+    @apply bg-white text-black px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200;
   }
   
   .secondary-btn {
-    @apply bg-zinrai-surface text-white px-6 py-3 rounded-full font-medium border border-zinrai-border hover:border-zinrai-accent transition-all duration-200;
+    @apply bg-zinrai-surface text-white px-4 py-2 rounded-lg font-medium border border-zinrai-border hover:border-zinrai-accent hover:bg-zinrai-dark transition-colors duration-200;
   }
   
   /* Video section */

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Download, Play, Image, FileText, Package, ArrowRight } from "lucide-react";
+import { Download, Play, Image, FileText, Package, ArrowRight, Search, Filter, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { CategoryType, ContentItem } from "@/lib/types";
 import { apiRequest } from "@/lib/queryClient";
@@ -12,9 +14,12 @@ import Footer from "@/components/footer";
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>('social-media');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<string>('title');
   const { toast } = useToast();
 
-  const { data: items, isLoading } = useQuery({
+  const { data: allItems, isLoading } = useQuery({
     queryKey: ['/api/content', activeCategory],
     queryFn: async () => {
       const params = new URLSearchParams();
@@ -25,6 +30,28 @@ export default function Home() {
       return response.json() as Promise<ContentItem[]>;
     },
   });
+
+  // Filter and sort items based on search and filters
+  const filteredItems = allItems?.filter(item => {
+    const matchesSearch = !searchQuery || 
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesType = typeFilter === 'all' || item.type === typeFilter;
+    
+    return matchesSearch && matchesType;
+  }).sort((a, b) => {
+    switch (sortBy) {
+      case 'title':
+        return a.title.localeCompare(b.title);
+      case 'downloads':
+        return (b.downloadCount || 0) - (a.downloadCount || 0);
+      case 'newest':
+        return new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime();
+      default:
+        return 0;
+    }
+  }) || [];
 
   const handleDownload = async (item: ContentItem) => {
     try {
@@ -173,13 +200,72 @@ export default function Home() {
       {/* Content Section */}
       <section className="py-16 px-6 bg-zinrai-secondary/30">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              {getCategoryTitle(activeCategory)}
-            </h2>
-            <p className="text-zinrai-muted text-lg">
-              {getCategoryDescription(activeCategory)}
-            </p>
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-3xl font-bold text-white mb-2">
+                  {getCategoryTitle(activeCategory)}
+                </h2>
+                <p className="text-zinrai-muted">
+                  {getCategoryDescription(activeCategory)}
+                </p>
+              </div>
+              <div className="text-sm text-zinrai-muted">
+                {filteredItems.length} {filteredItems.length === 1 ? 'item' : 'items'}
+              </div>
+            </div>
+
+            {/* Filters and Search */}
+            <div className="bg-zinrai-surface rounded-xl border border-zinrai-border p-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinrai-muted h-4 w-4" />
+                  <Input
+                    placeholder="Search assets..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 bg-zinrai-dark border-zinrai-border text-white placeholder-zinrai-muted"
+                  />
+                </div>
+                
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                  <SelectTrigger className="bg-zinrai-dark border-zinrai-border text-white">
+                    <SelectValue placeholder="Filter by type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="video">Video</SelectItem>
+                    <SelectItem value="graphic">Graphic</SelectItem>
+                    <SelectItem value="template">Template</SelectItem>
+                    <SelectItem value="bundle">Bundle</SelectItem>
+                    <SelectItem value="mockup">Mockup</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="bg-zinrai-dark border-zinrai-border text-white">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="title">Title A-Z</SelectItem>
+                    <SelectItem value="downloads">Most Downloaded</SelectItem>
+                    <SelectItem value="newest">Newest First</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setTypeFilter('all');
+                    setSortBy('title');
+                  }}
+                  variant="outline"
+                  className="border-zinrai-border text-zinrai-muted hover:text-white hover:bg-zinrai-dark"
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            </div>
           </div>
 
           {activeCategory === 'store' ? (
@@ -198,58 +284,74 @@ export default function Home() {
               </div>
             </div>
           ) : isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-zinrai-surface rounded-2xl p-6">
-                  <Skeleton className="h-48 w-full mb-4 bg-zinrai-border rounded-xl" />
-                  <Skeleton className="h-6 w-3/4 mb-2 bg-zinrai-border" />
-                  <Skeleton className="h-4 w-1/2 bg-zinrai-border" />
+            <div className="space-y-3">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="bg-zinrai-surface rounded-lg p-4 border border-zinrai-border">
+                  <div className="flex items-center gap-4">
+                    <Skeleton className="h-16 w-16 bg-zinrai-border rounded-lg" />
+                    <div className="flex-1">
+                      <Skeleton className="h-5 w-1/3 mb-2 bg-zinrai-border" />
+                      <Skeleton className="h-4 w-2/3 bg-zinrai-border" />
+                    </div>
+                    <Skeleton className="h-8 w-20 bg-zinrai-border rounded" />
+                  </div>
                 </div>
               ))}
             </div>
-          ) : items && items.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {items.map((item) => (
-                <div key={item.id} className="asset-card">
-                  <div 
-                    className="h-48 bg-cover bg-center rounded-xl mb-4"
-                    style={{ backgroundImage: `url(${item.thumbnailUrl})` }}
-                  />
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <Badge className="bg-zinrai-accent/20 text-zinrai-accent border-zinrai-accent/30">
-                        {getTypeIcon(item.type)}
-                        <span className="ml-2 capitalize">{item.type}</span>
-                      </Badge>
-                      {item.featured && (
-                        <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-                          Featured
+          ) : filteredItems.length > 0 ? (
+            <div className="space-y-3">
+              {filteredItems.map((item) => (
+                <div key={item.id} className="bg-zinrai-surface rounded-lg p-4 border border-zinrai-border hover:border-zinrai-accent/50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-16 h-16 bg-cover bg-center rounded-lg flex-shrink-0 border border-zinrai-border"
+                      style={{ backgroundImage: `url(${item.thumbnailUrl})` }}
+                    />
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-white font-medium truncate">{item.title}</h3>
+                        {item.featured && (
+                          <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 text-xs">
+                            Featured
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      <div className="flex items-center gap-3 mb-2">
+                        <Badge variant="outline" className="border-zinrai-border text-zinrai-muted text-xs">
+                          {getTypeIcon(item.type)}
+                          <span className="ml-1 capitalize">{item.type}</span>
                         </Badge>
+                        <span className="text-xs text-zinrai-muted">
+                          {item.downloadCount ? `${item.downloadCount} downloads` : 'New'}
+                        </span>
+                      </div>
+                      
+                      {item.description && (
+                        <p className="text-sm text-zinrai-muted truncate">{item.description}</p>
                       )}
                     </div>
                     
-                    <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                    <p className="text-zinrai-muted text-sm">{item.description}</p>
-                    
-                    <div className="flex items-center justify-between pt-2">
-                      <div className="text-xs text-zinrai-muted">
-                        {item.downloadCount ? `${item.downloadCount} downloads` : 'New'}
-                      </div>
-                      <Button
-                        onClick={() => handleDownload(item)}
-                        className="primary-btn text-sm"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        Get File
-                      </Button>
-                    </div>
+                    <Button
+                      onClick={() => handleDownload(item)}
+                      size="sm"
+                      className="bg-white text-black hover:bg-gray-100 font-medium px-4 py-2 h-auto rounded-lg transition-colors"
+                    >
+                      <ExternalLink className="h-3 w-3 mr-1.5" />
+                      Get File
+                    </Button>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-16">
-              <p className="text-zinrai-muted text-lg">No content available in this category.</p>
+              <p className="text-zinrai-muted text-lg">
+                {searchQuery || typeFilter !== 'all' 
+                  ? 'No items match your filters' 
+                  : 'No content available in this category'}
+              </p>
             </div>
           )}
         </div>
