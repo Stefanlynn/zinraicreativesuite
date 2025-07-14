@@ -287,6 +287,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  const httpServer = createServer(app);
-  return httpServer;
+  // Only create HTTP server if not in serverless environment
+  if (!process.env.NETLIFY) {
+    const httpServer = createServer(app);
+    return httpServer;
+  }
+  
+  // Return a mock server for Netlify functions
+  return null as any;
 }

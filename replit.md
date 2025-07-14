@@ -116,12 +116,20 @@ The backend provides RESTful endpoints for:
 ### Build Process
 - **Frontend**: Vite builds the React application to `dist/public`
 - **Backend**: esbuild bundles the Express server to `dist/index.js`
+- **Netlify**: Custom build script creates serverless functions in `dist/functions`
 - **Database**: Drizzle migrations are applied via `db:push` command
 
 ### Environment Configuration
 - **Development**: Uses tsx for TypeScript execution and Vite dev server
 - **Production**: Serves built static files through Express with API routes
+- **Netlify**: Serverless functions with automatic scaling and global CDN
 - **Database**: Requires `DATABASE_URL` environment variable for PostgreSQL connection
+
+### Netlify Configuration
+- **Build Command**: `chmod +x build.sh && ./build.sh`
+- **Publish Directory**: `dist/public`
+- **Functions Directory**: `dist/functions`
+- **Redirects**: API calls routed to `/.netlify/functions/api`
 
 ### Key Features
 - **Hot Module Replacement**: Instant updates during development
