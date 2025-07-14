@@ -51,6 +51,9 @@ Located in `shared/schema.ts`, the application uses four main tables:
 - **Updated project request form** with due date field and 3-week advance notice requirement (removed budget field)
 - **Fixed form visibility issues** - improved text contrast in both project request and admin forms
 - **Enhanced dropdown readability** - all dropdowns now use white backgrounds with black text for better visibility
+- **Fixed admin dashboard form inputs** - all input fields now have white backgrounds with black text for proper visibility when typing
+- **Removed timeline field** from project request form - simplified form with Project Type and Due Date only
+- **Updated Add Asset button** - removed blue styling, now uses consistent yellow ZiNRAi branding
 
 ### API Layer
 The backend provides RESTful endpoints for:
