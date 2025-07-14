@@ -134,8 +134,7 @@ export default function AdminLogin() {
         <div className="mt-6 flex justify-center">
           <Button
             onClick={() => setLocation('/')}
-            variant="outline"
-            className="border-zinrai-border text-zinrai-muted hover:text-zinrai-accent hover:border-zinrai-accent"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-4 py-2 rounded-lg transition-colors duration-200"
           >
             <Home className="h-4 w-4 mr-2" />
             Back to Main Site
