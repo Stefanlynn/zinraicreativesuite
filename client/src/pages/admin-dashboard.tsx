@@ -58,6 +58,38 @@ export default function AdminDashboard() {
     return null;
   }
 
+  // Test authentication on page load
+  const { data: authTest, isError: authError, isLoading: authLoading } = useQuery({
+    queryKey: ['/api/admin/auth-test'],
+    queryFn: async () => {
+      try {
+        const response = await apiRequest('/api/admin/content', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        return response;
+      } catch (error) {
+        console.error('Auth test failed:', error);
+        // If auth fails, clear token and redirect to login
+        localStorage.removeItem('adminToken');
+        setLocation('/admin/login');
+        throw error;
+      }
+    },
+    retry: false,
+  });
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return <div className="min-h-screen bg-zinrai-dark flex items-center justify-center">
+      <div className="text-white">Checking authentication...</div>
+    </div>;
+  }
+
+  // If auth test failed, redirect to login
+  if (authError) {
+    return null;
+  }
+
   const form = useForm<ContentItemFormData>({
     resolver: zodResolver(contentItemSchema),
     defaultValues: {
@@ -117,6 +149,18 @@ export default function AdminDashboard() {
       resetForm();
     },
     onError: (error: any) => {
+      console.error('Create mutation error:', error);
+      // If unauthorized, clear token and redirect to login
+      if (error.message?.includes('401') || error.message?.includes('Unauthorized')) {
+        localStorage.removeItem('adminToken');
+        setLocation('/admin/login');
+        toast({
+          title: "Session Expired",
+          description: "Please log in again to continue",
+          variant: "destructive",
+        });
+        return;
+      }
       toast({
         title: "Error",
         description: error.message || "Failed to create content item",
@@ -144,6 +188,18 @@ export default function AdminDashboard() {
       form.reset();
     },
     onError: (error: any) => {
+      console.error('Update mutation error:', error);
+      // If unauthorized, clear token and redirect to login
+      if (error.message?.includes('401') || error.message?.includes('Unauthorized')) {
+        localStorage.removeItem('adminToken');
+        setLocation('/admin/login');
+        toast({
+          title: "Session Expired",
+          description: "Please log in again to continue",
+          variant: "destructive",
+        });
+        return;
+      }
       toast({
         title: "Error",
         description: error.message || "Failed to update content item",
@@ -167,6 +223,18 @@ export default function AdminDashboard() {
       });
     },
     onError: (error: any) => {
+      console.error('Delete mutation error:', error);
+      // If unauthorized, clear token and redirect to login
+      if (error.message?.includes('401') || error.message?.includes('Unauthorized')) {
+        localStorage.removeItem('adminToken');
+        setLocation('/admin/login');
+        toast({
+          title: "Session Expired",
+          description: "Please log in again to continue",
+          variant: "destructive",
+        });
+        return;
+      }
       toast({
         title: "Error",
         description: error.message || "Failed to delete content item",
