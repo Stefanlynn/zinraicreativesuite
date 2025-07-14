@@ -43,6 +43,11 @@ Located in `shared/schema.ts`, the application uses four main tables:
 - Removed hero marketing text ("Creative Excellence. Delivered.") for cleaner video focus
 - Fixed button styling issues: consistent yellow Request Project buttons, proper admin hover states
 - **CLEARED ALL MOCK DATA** - Platform ready for real content testing with clean slate
+- **Updated hero video** to new YouTube video (vzbO82MAtWg) with proper aspect ratio and no black bars
+- **Added social media sharing** with Open Graph meta tags and custom gradient lightbulb preview image
+- **Fixed admin login 404 error** with proper Netlify redirects for SPA routing
+- **Set up email notifications** for project requests - all submissions now go to andre.butler@zinrai.com
+- **Enhanced admin dashboard** with improved project request display showing all form details
 
 ### API Layer
 The backend provides RESTful endpoints for:

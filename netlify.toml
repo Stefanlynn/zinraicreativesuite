@@ -19,3 +19,10 @@
 [functions]
   directory = "dist/functions"
   node_bundler = "esbuild"
+
+# Form notifications
+[[forms]]
+  name = "project-request"
+  to = "andre.butler@zinrai.com"
+  subject = "New Project Request from ZiNRAi Creative"
+  template = "netlify/forms/project-request-notification.html"

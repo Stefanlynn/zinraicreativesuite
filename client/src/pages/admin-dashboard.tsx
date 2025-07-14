@@ -128,9 +128,9 @@ export default function AdminDashboard() {
 
   // Fetch project requests
   const { data: projectRequests, isLoading: requestsLoading } = useQuery({
-    queryKey: ['/api/admin/project-requests'],
+    queryKey: ['/api/project-requests'],
     queryFn: async () => {
-      const response = await apiRequest('/api/admin/project-requests', {
+      const response = await apiRequest('/api/project-requests', {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response as ProjectRequest[];
@@ -402,19 +402,50 @@ export default function AdminDashboard() {
               <CardContent>
                 {requestsLoading ? (
                   <div className="text-zinrai-muted">Loading...</div>
+                ) : projectRequests?.length === 0 ? (
+                  <div className="text-zinrai-muted text-center py-8">
+                    No project requests yet
+                  </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-4 max-h-96 overflow-y-auto">
                     {projectRequests?.map((request) => (
                       <div key={request.id} className="p-4 bg-zinrai-dark rounded-lg border border-zinrai-border">
                         <div className="flex items-center justify-between mb-2">
                           <h3 className="font-medium text-white">{request.fullName}</h3>
                           <Badge variant="outline" className="text-xs">
-                            {request.status}
+                            {request.status || 'New'}
                           </Badge>
                         </div>
-                        <p className="text-sm text-zinrai-muted mb-2">{request.email}</p>
-                        <p className="text-sm text-white mb-2">{request.projectType}</p>
-                        <p className="text-xs text-zinrai-muted">{request.description}</p>
+                        <div className="space-y-2">
+                          <p className="text-sm text-zinrai-muted">
+                            <span className="font-medium">Email:</span> {request.email}
+                          </p>
+                          <p className="text-sm text-white">
+                            <span className="font-medium">Project:</span> {request.projectType}
+                          </p>
+                          <p className="text-sm text-zinrai-muted">
+                            <span className="font-medium">Timeline:</span> {request.timeline}
+                          </p>
+                          <p className="text-sm text-zinrai-muted">
+                            <span className="font-medium">Budget:</span> {request.budgetRange}
+                          </p>
+                          <p className="text-sm text-zinrai-muted">
+                            <span className="font-medium">Contact:</span> {request.contactMethod}
+                          </p>
+                          <p className="text-xs text-zinrai-muted mt-2">
+                            <span className="font-medium">Description:</span> {request.description}
+                          </p>
+                          {request.referenceFiles && request.referenceFiles.length > 0 && (
+                            <p className="text-xs text-zinrai-muted">
+                              <span className="font-medium">Files:</span> {request.referenceFiles.join(', ')}
+                            </p>
+                          )}
+                          {request.createdAt && (
+                            <p className="text-xs text-zinrai-muted">
+                              <span className="font-medium">Submitted:</span> {new Date(request.createdAt).toLocaleDateString()}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>

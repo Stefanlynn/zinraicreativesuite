@@ -43,13 +43,33 @@ export default function ProjectRequestForm() {
 
   const mutation = useMutation({
     mutationFn: async (data: ProjectRequestFormData) => {
+      // Create form data for Netlify Forms (this will send email)
+      const formData = new FormData();
+      formData.append('form-name', 'project-request');
+      formData.append('full-name', data.fullName);
+      formData.append('email', data.email);
+      formData.append('project-type', data.projectType);
+      formData.append('timeline', data.timeline);
+      formData.append('description', data.description);
+      formData.append('budget-range', data.budgetRange);
+      formData.append('contact-method', data.contactMethod);
+      formData.append('reference-files', referenceFiles.map(file => file.name).join(', '));
+      
+      // Submit to Netlify Forms for email notification
+      const netlifyResponse = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      
+      // Also save to database for admin dashboard
       const requestData = {
         ...data,
         referenceFiles: referenceFiles.map(file => file.name),
       };
       
-      const response = await apiRequest('POST', '/api/project-requests', requestData);
-      return response.json();
+      const apiResponse = await apiRequest('POST', '/api/project-requests', requestData);
+      return apiResponse;
     },
     onSuccess: () => {
       toast({
@@ -83,7 +103,29 @@ export default function ProjectRequestForm() {
 
       <div className="bg-zinrai-surface rounded-xl p-8 border border-yellow-500/20">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form 
+                onSubmit={form.handleSubmit(onSubmit)} 
+                className="space-y-6"
+                name="project-request"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+              >
+                {/* Hidden fields for Netlify Forms */}
+                <input type="hidden" name="form-name" value="project-request" />
+                <div style={{ display: 'none' }}>
+                  <input name="bot-field" />
+                </div>
+                
+                {/* Hidden inputs that match the form structure for Netlify */}
+                <input type="hidden" name="full-name" />
+                <input type="hidden" name="email" />
+                <input type="hidden" name="project-type" />
+                <input type="hidden" name="timeline" />
+                <input type="hidden" name="description" />
+                <input type="hidden" name="budget-range" />
+                <input type="hidden" name="contact-method" />
+                <input type="hidden" name="reference-files" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
