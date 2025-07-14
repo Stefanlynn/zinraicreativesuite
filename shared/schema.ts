@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, date } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -28,8 +28,8 @@ export const projectRequests = pgTable("project_requests", {
   email: text("email").notNull(),
   projectType: text("project_type").notNull(),
   timeline: text("timeline").notNull(),
+  dueDate: date("due_date").notNull(),
   description: text("description").notNull(),
-  budgetRange: text("budget_range").notNull(),
   contactMethod: text("contact_method").notNull(),
   referenceFiles: text("reference_files").array(),
   status: text("status").default("pending"), // pending, in-progress, completed, cancelled

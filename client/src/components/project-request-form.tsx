@@ -17,8 +17,13 @@ const projectRequestSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   projectType: z.string().min(1, "Please select a project type"),
   timeline: z.string().min(1, "Please select a timeline"),
+  dueDate: z.string().min(1, "Please select a due date").refine((date) => {
+    const selectedDate = new Date(date);
+    const threeWeeksFromNow = new Date();
+    threeWeeksFromNow.setDate(threeWeeksFromNow.getDate() + 21);
+    return selectedDate >= threeWeeksFromNow;
+  }, "Due date must be at least 3 weeks from today"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  budgetRange: z.string().min(1, "Please select a budget range"),
   contactMethod: z.string().min(1, "Please select a contact method"),
 });
 
@@ -35,8 +40,8 @@ export default function ProjectRequestForm() {
       email: "",
       projectType: "",
       timeline: "",
+      dueDate: "",
       description: "",
-      budgetRange: "",
       contactMethod: "email",
     },
   });
@@ -50,8 +55,8 @@ export default function ProjectRequestForm() {
       formData.append('email', data.email);
       formData.append('project-type', data.projectType);
       formData.append('timeline', data.timeline);
+      formData.append('due-date', data.dueDate);
       formData.append('description', data.description);
-      formData.append('budget-range', data.budgetRange);
       formData.append('contact-method', data.contactMethod);
       formData.append('reference-files', referenceFiles.map(file => file.name).join(', '));
       
@@ -122,8 +127,8 @@ export default function ProjectRequestForm() {
                 <input type="hidden" name="email" />
                 <input type="hidden" name="project-type" />
                 <input type="hidden" name="timeline" />
+                <input type="hidden" name="due-date" />
                 <input type="hidden" name="description" />
-                <input type="hidden" name="budget-range" />
                 <input type="hidden" name="contact-method" />
                 <input type="hidden" name="reference-files" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -178,7 +183,7 @@ export default function ProjectRequestForm() {
                               <SelectValue placeholder="Select project type" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="bg-zinrai-dark border-zinrai-border">
+                          <SelectContent className="bg-white border-gray-300 text-black">
                             <SelectItem value="social-media">Social Media Content</SelectItem>
                             <SelectItem value="video-production">Video Production</SelectItem>
                             <SelectItem value="graphic-design">Graphic Design</SelectItem>
@@ -204,7 +209,7 @@ export default function ProjectRequestForm() {
                               <SelectValue placeholder="Select timeline" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="bg-zinrai-dark border-zinrai-border">
+                          <SelectContent className="bg-white border-gray-300 text-black">
                             <SelectItem value="rush">Rush (1-3 days)</SelectItem>
                             <SelectItem value="standard">Standard (1-2 weeks)</SelectItem>
                             <SelectItem value="extended">Extended (2-4 weeks)</SelectItem>
@@ -212,6 +217,28 @@ export default function ProjectRequestForm() {
                           </SelectContent>
                         </Select>
                         <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="dueDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white">Due Date</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="date" 
+                            className="form-input"
+                            min={new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                        <p className="text-xs text-zinrai-muted mt-1">
+                          Projects require a minimum of 3 weeks advance notice
+                        </p>
                       </FormItem>
                     )}
                   />
@@ -239,25 +266,22 @@ export default function ProjectRequestForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
-                    name="budgetRange"
+                    name="dueDate"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-white">Budget Range</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="form-select">
-                              <SelectValue placeholder="Select budget range" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-zinrai-dark border-zinrai-border">
-                            <SelectItem value="100-500">$100 - $500</SelectItem>
-                            <SelectItem value="500-1000">$500 - $1,000</SelectItem>
-                            <SelectItem value="1000-2500">$1,000 - $2,500</SelectItem>
-                            <SelectItem value="2500+">$2,500+</SelectItem>
-                            <SelectItem value="discuss">Let's discuss</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <FormLabel className="text-white">Due Date</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="date" 
+                            className="form-input"
+                            min={new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
+                        <p className="text-xs text-zinrai-muted mt-1">
+                          Projects require a minimum of 3 weeks advance notice
+                        </p>
                       </FormItem>
                     )}
                   />
@@ -274,7 +298,7 @@ export default function ProjectRequestForm() {
                               <SelectValue placeholder="Select contact method" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="bg-zinrai-dark border-zinrai-border">
+                          <SelectContent className="bg-white border-gray-300 text-black">
                             <SelectItem value="email">Email</SelectItem>
                             <SelectItem value="phone">Phone</SelectItem>
                             <SelectItem value="video-call">Video Call</SelectItem>

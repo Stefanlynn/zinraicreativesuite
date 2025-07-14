@@ -48,6 +48,9 @@ Located in `shared/schema.ts`, the application uses four main tables:
 - **Fixed admin login 404 error** with proper Netlify redirects for SPA routing
 - **Set up email notifications** for project requests - all submissions now go to andre.butler@zinrai.com
 - **Enhanced admin dashboard** with improved project request display showing all form details
+- **Updated project request form** with due date field and 3-week advance notice requirement (removed budget field)
+- **Fixed form visibility issues** - improved text contrast in both project request and admin forms
+- **Enhanced dropdown readability** - all dropdowns now use white backgrounds with black text for better visibility
 
 ### API Layer
 The backend provides RESTful endpoints for:

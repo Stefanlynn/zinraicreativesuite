@@ -427,7 +427,7 @@ export default function AdminDashboard() {
                             <span className="font-medium">Timeline:</span> {request.timeline}
                           </p>
                           <p className="text-sm text-zinrai-muted">
-                            <span className="font-medium">Budget:</span> {request.budgetRange}
+                            <span className="font-medium">Due Date:</span> {request.dueDate ? new Date(request.dueDate).toLocaleDateString() : 'Not specified'}
                           </p>
                           <p className="text-sm text-zinrai-muted">
                             <span className="font-medium">Contact:</span> {request.contactMethod}
@@ -516,7 +516,7 @@ export default function AdminDashboard() {
                                   <SelectValue placeholder="Select category" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="bg-white border-gray-300 text-black">
                                 <SelectItem value="general">General</SelectItem>
                                 <SelectItem value="social-media">Social Media</SelectItem>
                                 <SelectItem value="field-tools">Field Tools</SelectItem>
@@ -542,7 +542,7 @@ export default function AdminDashboard() {
                                   <SelectValue placeholder="Select type" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="bg-white border-gray-300 text-black">
                                 <SelectItem value="video">Video</SelectItem>
                                 <SelectItem value="graphic">Graphic</SelectItem>
                                 <SelectItem value="template">Template</SelectItem>
