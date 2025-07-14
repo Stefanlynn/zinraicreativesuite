@@ -52,6 +52,9 @@ export default function AdminDashboard() {
 
   const token = localStorage.getItem('adminToken');
   
+  // Debug logging
+  console.log('Admin token from localStorage:', token);
+  
   // Check if user is authenticated
   if (!token) {
     setLocation('/admin/login');
@@ -139,6 +142,8 @@ export default function AdminDashboard() {
 
   const createMutation = useMutation({
     mutationFn: async (data: ContentItemFormData) => {
+      console.log('Creating content with token:', token);
+      console.log('Data being sent:', data);
       await apiRequest('/api/admin/content', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
