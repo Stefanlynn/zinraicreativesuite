@@ -432,9 +432,6 @@ export default function AdminDashboard() {
                           <p className="text-sm text-zinrai-muted">
                             <span className="font-medium">Due Date:</span> {request.dueDate ? new Date(request.dueDate).toLocaleDateString() : 'Not specified'}
                           </p>
-                          <p className="text-sm text-zinrai-muted">
-                            <span className="font-medium">Contact:</span> {request.contactMethod}
-                          </p>
                           <p className="text-xs text-zinrai-muted mt-2">
                             <span className="font-medium">Description:</span> {request.description}
                           </p>

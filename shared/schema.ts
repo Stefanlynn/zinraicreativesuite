@@ -29,7 +29,6 @@ export const projectRequests = pgTable("project_requests", {
   projectType: text("project_type").notNull(),
   dueDate: date("due_date").notNull(),
   description: text("description").notNull(),
-  contactMethod: text("contact_method").notNull(),
   referenceFiles: text("reference_files").array(),
   status: text("status").default("pending"), // pending, in-progress, completed, cancelled
   createdAt: timestamp("created_at").defaultNow(),

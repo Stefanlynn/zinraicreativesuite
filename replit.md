@@ -56,6 +56,7 @@ Located in `shared/schema.ts`, the application uses four main tables:
 - **Updated Add Asset button** - removed blue styling, now uses consistent yellow ZiNRAi branding
 - **Enhanced admin login security** - removed visible test credentials from login screen
 - **Added navigation** - "Back to Main Site" button on admin login page for better user experience
+- **Simplified project request form** - removed contact method field, kept only due date and email for streamlined submissions
 
 ### API Layer
 The backend provides RESTful endpoints for:
