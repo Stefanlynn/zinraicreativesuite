@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { CategoryType, ContentItem } from "@/lib/types";
 import { apiRequest } from "@/lib/queryClient";
-import ProjectRequestForm from "@/components/project-request-form";
+
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -137,7 +137,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-4">
               <Button 
-                onClick={() => document.getElementById('request')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => window.location.href = '/request-project'}
                 className="secondary-btn"
               >
                 Request Project
@@ -357,7 +357,6 @@ export default function Home() {
         </div>
       </section>
 
-      <ProjectRequestForm />
       <Footer />
     </div>
   );

@@ -78,13 +78,14 @@ export default function AdminLogin() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-white">Username</FormLabel>
+                    <FormLabel className="text-white">Email</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Enter your username"
+                        type="email"
+                        placeholder="Enter your email address"
                         className="form-input"
-                        autoComplete="username"
+                        autoComplete="email"
                       />
                     </FormControl>
                     <FormMessage />

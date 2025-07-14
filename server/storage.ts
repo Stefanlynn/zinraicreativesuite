@@ -68,8 +68,8 @@ export class MemStorage implements IStorage {
     // Initialize with admin user
     const adminUser: User = {
       id: this.currentUserId++,
-      username: "admin",
-      password: "admin123", // In production, this should be hashed
+      username: "andre.butler@zinrai.com",
+      password: "6September2008", // In production, this should be hashed
       isAdmin: true
     };
     this.users.set(adminUser.id, adminUser);

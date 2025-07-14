@@ -73,16 +73,15 @@ export default function ProjectRequestForm() {
   };
 
   return (
-    <section id="request" className="py-24 bg-zinrai-dark px-6">
-      <div className="container mx-auto max-w-4xl">
-        <div className="text-center mb-16">
-          <h3 className="text-4xl font-bold mb-6 text-white">Request Custom Project</h3>
-          <p className="text-xl text-zinrai-muted max-w-2xl mx-auto">
-            Need something unique? Our creative team is ready to bring your vision to life.
-          </p>
-        </div>
+    <div className="container mx-auto max-w-4xl">
+      <div className="text-center mb-12">
+        <h3 className="text-3xl font-bold mb-4 text-white">Tell Us About Your Project</h3>
+        <p className="text-lg text-zinrai-muted max-w-2xl mx-auto">
+          Fill out the form below and we'll get back to you within 24 hours to discuss your project in detail.
+        </p>
+      </div>
 
-        <div className="glass-card p-8 md:p-12">
+      <div className="bg-zinrai-surface rounded-xl p-8 border border-yellow-500/20">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -254,7 +253,7 @@ export default function ProjectRequestForm() {
                   <Button 
                     type="submit" 
                     disabled={mutation.isPending}
-                    className="primary-btn text-lg px-12 py-4 disabled:opacity-50"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-8 py-3 rounded-lg disabled:opacity-50"
                   >
                     {mutation.isPending ? "Submitting..." : "Submit Project Request"}
                   </Button>
@@ -263,6 +262,5 @@ export default function ProjectRequestForm() {
             </Form>
         </div>
       </div>
-    </section>
   );
 }

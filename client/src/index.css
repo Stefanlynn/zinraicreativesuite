@@ -173,14 +173,14 @@
   
   /* Form styles */
   .form-input {
-    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white placeholder-zinrai-muted focus:outline-none focus:border-zinrai-accent;
+    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white placeholder-zinrai-muted focus:outline-none focus:border-yellow-500;
   }
   
   .form-textarea {
-    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white placeholder-zinrai-muted focus:outline-none focus:border-zinrai-accent resize-none;
+    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white placeholder-zinrai-muted focus:outline-none focus:border-yellow-500 resize-none;
   }
   
   .form-select {
-    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white focus:outline-none focus:border-zinrai-accent;
+    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white focus:outline-none focus:border-yellow-500;
   }
 }
