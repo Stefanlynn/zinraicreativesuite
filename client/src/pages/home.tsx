@@ -172,7 +172,22 @@ export default function Home() {
             </p>
           </div>
 
-          {isLoading ? (
+          {activeCategory === 'store' ? (
+            <div className="text-center py-24">
+              <div className="max-w-md mx-auto">
+                <div className="bg-zinrai-surface rounded-3xl p-12 border border-zinrai-border">
+                  <div className="text-6xl mb-6">🚀</div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Coming Soon</h3>
+                  <p className="text-zinrai-muted text-lg mb-8">
+                    The ZiNRAi Store is launching soon with exclusive merchandise and branded materials.
+                  </p>
+                  <div className="text-sm text-zinrai-accent">
+                    Stay tuned for updates!
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="bg-zinrai-surface rounded-2xl p-6">
