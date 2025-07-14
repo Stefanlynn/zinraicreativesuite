@@ -44,7 +44,11 @@ export default function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="hover:text-zinrai-accent transition-colors text-white"
+                className={`transition-colors ${
+                  item.id === 'request' 
+                    ? 'text-yellow-400 hover:text-yellow-300 font-semibold' 
+                    : 'text-white hover:text-zinrai-accent'
+                }`}
               >
                 {item.label}
               </button>
@@ -64,7 +68,11 @@ export default function Header() {
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-left hover:text-zinrai-accent transition-colors text-white py-2"
+                    className={`text-left transition-colors py-2 ${
+                      item.id === 'request' 
+                        ? 'text-yellow-400 hover:text-yellow-300 font-semibold' 
+                        : 'text-white hover:text-zinrai-accent'
+                    }`}
                   >
                     {item.label}
                   </button>

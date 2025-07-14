@@ -218,7 +218,7 @@ export default function AdminDashboard() {
             <Button
               onClick={handleLogout}
               variant="outline"
-              className="border-zinrai-border text-zinrai-muted hover:text-white"
+              className="border-zinrai-border text-zinrai-muted hover:text-zinrai-accent hover:border-zinrai-accent"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Logout
@@ -330,7 +330,7 @@ export default function AdminDashboard() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEdit(item)}
-                            className="text-zinrai-muted hover:text-white"
+                            className="text-zinrai-muted hover:text-zinrai-accent"
                           >
                             <Edit3 className="h-4 w-4" />
                           </Button>
@@ -567,7 +567,7 @@ export default function AdminDashboard() {
                         type="button"
                         variant="outline"
                         onClick={resetForm}
-                        className="border-zinrai-border text-zinrai-muted hover:text-white"
+                        className="border-zinrai-border text-zinrai-muted hover:text-zinrai-accent hover:border-zinrai-accent"
                       >
                         Cancel
                       </Button>
