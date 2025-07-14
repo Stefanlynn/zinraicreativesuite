@@ -93,6 +93,7 @@ export default function Home() {
 
   const getCategoryTitle = (category: CategoryType) => {
     switch (category) {
+      case 'general': return 'General';
       case 'social-media': return 'Social Media';
       case 'field-tools': return 'Field Tools';
       case 'events': return 'Events';
@@ -103,6 +104,7 @@ export default function Home() {
 
   const getCategoryDescription = (category: CategoryType) => {
     switch (category) {
+      case 'general': return 'General purpose templates and resources for everyday use';
       case 'social-media': return 'Reels, graphics, and content designed to engage your audience';
       case 'field-tools': return 'Professional tools and resources for field operations';
       case 'events': return 'Graphics and videos for events and special occasions';
@@ -112,6 +114,7 @@ export default function Home() {
   };
 
   const categories = [
+    { id: 'general' as CategoryType, label: 'General' },
     { id: 'social-media' as CategoryType, label: 'Social Media' },
     { id: 'field-tools' as CategoryType, label: 'Field Tools' },
     { id: 'events' as CategoryType, label: 'Events' },

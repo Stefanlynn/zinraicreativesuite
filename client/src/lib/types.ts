@@ -25,7 +25,7 @@ export interface ProjectRequest {
   createdAt?: Date;
 }
 
-export type CategoryType = 'all' | 'social-media' | 'field-tools' | 'events' | 'store';
+export type CategoryType = 'all' | 'general' | 'social-media' | 'field-tools' | 'events' | 'store';
 
 export interface DownloadResponse {
   message: string;

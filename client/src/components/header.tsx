@@ -15,6 +15,7 @@ export default function Header() {
   };
 
   const navItems = [
+    { label: 'General', id: 'general' },
     { label: 'Social Media', id: 'social-media' },
     { label: 'Field Tools', id: 'field-tools' },
     { label: 'Events', id: 'events' },

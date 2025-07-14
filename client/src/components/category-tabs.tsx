@@ -1,5 +1,5 @@
 import { CategoryType } from "@/lib/types";
-import { Share2, Gavel, Calendar, Store } from "lucide-react";
+import { Share2, Gavel, Calendar, Store, FileText } from "lucide-react";
 
 interface CategoryTabsProps {
   activeCategory: CategoryType;
@@ -9,6 +9,7 @@ interface CategoryTabsProps {
 export default function CategoryTabs({ activeCategory, onCategoryChange }: CategoryTabsProps) {
   const categories = [
     { id: 'all' as CategoryType, label: 'All Categories', icon: null },
+    { id: 'general' as CategoryType, label: 'General', icon: FileText },
     { id: 'social-media' as CategoryType, label: 'Social Media', icon: Share2 },
     { id: 'field-tools' as CategoryType, label: 'Field Tools', icon: Gavel },
     { id: 'events' as CategoryType, label: 'Events', icon: Calendar },
