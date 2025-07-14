@@ -330,7 +330,7 @@ export default function AdminDashboard() {
                   <CardTitle className="text-white">Content Assets</CardTitle>
                   <Button
                     onClick={() => setShowAddForm(true)}
-                    className="primary-btn"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-4 py-2 rounded-lg transition-colors duration-200"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Asset
@@ -665,7 +665,7 @@ export default function AdminDashboard() {
                       </Button>
                       <Button
                         type="submit"
-                        className="primary-btn"
+                        className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-4 py-2 rounded-lg transition-colors duration-200 disabled:opacity-50"
                         disabled={createMutation.isPending || updateMutation.isPending}
                       >
                         {createMutation.isPending || updateMutation.isPending
