@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Apple-inspired ZiNRAi Colors */
+  --zinrai-dark: hsl(0, 0%, 8%);
+  --zinrai-secondary: hsl(0, 0%, 12%);
+  --zinrai-accent: hsl(51, 100%, 50%);
+  --zinrai-muted: hsl(0, 0%, 55%);
+  --zinrai-border: hsl(0, 0%, 18%);
+  --zinrai-glass: hsla(0, 0%, 100%, 0.05);
+  --zinrai-surface: hsl(0, 0%, 15%);
+}
+
+.dark {
+  --background: hsl(0, 0%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(0, 0%, 10.2%);
+  --muted-foreground: hsl(0, 0%, 64.9%);
+  --popover: hsl(0, 0%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(0, 0%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 20%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(0, 0%, 10.2%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(0, 0%, 10.2%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(0, 0%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-zinrai-dark text-white;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-zinrai-dark {
+    color: var(--zinrai-dark);
+  }
+  
+  .text-zinrai-secondary {
+    color: var(--zinrai-secondary);
+  }
+  
+  .text-zinrai-accent {
+    color: var(--zinrai-accent);
+  }
+  
+  .text-zinrai-muted {
+    color: var(--zinrai-muted);
+  }
+  
+  .bg-zinrai-dark {
+    background-color: var(--zinrai-dark);
+  }
+  
+  .bg-zinrai-secondary {
+    background-color: var(--zinrai-secondary);
+  }
+  
+  .bg-zinrai-accent {
+    background-color: var(--zinrai-accent);
+  }
+  
+  .bg-zinrai-surface {
+    background-color: var(--zinrai-surface);
+  }
+  
+  .bg-zinrai-glass {
+    background-color: var(--zinrai-glass);
+  }
+  
+  .border-zinrai-border {
+    border-color: var(--zinrai-border);
+  }
+  
+  .border-zinrai-accent {
+    border-color: var(--zinrai-accent);
+  }
+  
+  .hover\:bg-zinrai-accent:hover {
+    background-color: var(--zinrai-accent);
+  }
+  
+  .hover\:text-zinrai-accent:hover {
+    color: var(--zinrai-accent);
+  }
+  
+  .focus\:border-zinrai-accent:focus {
+    border-color: var(--zinrai-accent);
+  }
+
+  .placeholder-zinrai-muted::placeholder {
+    color: var(--zinrai-muted);
+  }
+}
+
+@layer components {
+  /* Apple-inspired Navigation */
+  .nav-link {
+    @apply text-lg font-medium text-zinrai-muted hover:text-white transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-zinrai-accent pb-2;
+  }
+  
+  .nav-link.active {
+    @apply text-white border-zinrai-accent;
+  }
+  
+  /* Apple-style Cards */
+  .asset-card {
+    @apply bg-zinrai-surface rounded-2xl p-6 hover:bg-zinrai-secondary transition-all duration-300 cursor-pointer border border-zinrai-border hover:border-zinrai-accent;
+  }
+  
+  .asset-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Glass morphism effects */
+  .glass-card {
+    @apply bg-zinrai-glass backdrop-blur-xl border border-zinrai-border rounded-2xl;
+  }
+  
+  /* Apple-style buttons */
+  .primary-btn {
+    @apply bg-zinrai-accent text-zinrai-dark px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition-all duration-200 hover:scale-105;
+  }
+  
+  .secondary-btn {
+    @apply bg-zinrai-surface text-white px-6 py-3 rounded-full font-medium border border-zinrai-border hover:border-zinrai-accent transition-all duration-200;
+  }
+  
+  /* Video section */
+  .hero-video {
+    @apply w-full h-96 md:h-[500px] rounded-3xl overflow-hidden shadow-2xl;
+  }
+  
+  /* Form styles */
+  .form-input {
+    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white placeholder-zinrai-muted focus:outline-none focus:border-zinrai-accent;
+  }
+  
+  .form-textarea {
+    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white placeholder-zinrai-muted focus:outline-none focus:border-zinrai-accent resize-none;
+  }
+  
+  .form-select {
+    @apply w-full px-4 py-3 bg-zinrai-surface border border-zinrai-border rounded-xl text-white focus:outline-none focus:border-zinrai-accent;
+  }
+}
