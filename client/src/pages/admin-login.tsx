@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { useLocation } from 'wouter';
-import { LogIn, Shield } from 'lucide-react';
+import { LogIn, Shield, Home } from 'lucide-react';
 
 const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
@@ -131,8 +131,15 @@ export default function AdminLogin() {
           </Form>
         </div>
 
-        <div className="mt-6 text-center text-sm text-zinrai-muted">
-          <p>Login: andre.butler@zinrai.com / 6September2008</p>
+        <div className="mt-6 flex justify-center">
+          <Button
+            onClick={() => setLocation('/')}
+            variant="outline"
+            className="border-zinrai-border text-zinrai-muted hover:text-zinrai-accent hover:border-zinrai-accent"
+          >
+            <Home className="h-4 w-4 mr-2" />
+            Back to Main Site
+          </Button>
         </div>
       </div>
     </div>

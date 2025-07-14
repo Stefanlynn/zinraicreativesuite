@@ -54,6 +54,8 @@ Located in `shared/schema.ts`, the application uses four main tables:
 - **Fixed admin dashboard form inputs** - all input fields now have white backgrounds with black text for proper visibility when typing
 - **Removed timeline field** from project request form - simplified form with Project Type and Due Date only
 - **Updated Add Asset button** - removed blue styling, now uses consistent yellow ZiNRAi branding
+- **Enhanced admin login security** - removed visible test credentials from login screen
+- **Added navigation** - "Back to Main Site" button on admin login page for better user experience
 
 ### API Layer
 The backend provides RESTful endpoints for:
