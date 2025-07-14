@@ -42,7 +42,7 @@ export default function RequestProject() {
       <section className="py-16 px-6 bg-gradient-to-br from-yellow-500/10 via-zinrai-dark to-zinrai-dark">
         <div className="container mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500/20 rounded-full mb-6">
-            <span className="text-2xl">⚡</span>
+            <div className="w-6 h-6 bg-yellow-500 rounded-full"></div>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Request Custom Project
@@ -52,17 +52,17 @@ export default function RequestProject() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
             <div className="bg-zinrai-surface rounded-xl p-6 border border-yellow-500/20 hover:border-yellow-500/40 transition-colors">
-              <div className="text-3xl mb-4">🎨</div>
+              <div className="w-8 h-8 bg-yellow-500/30 rounded-lg mb-4"></div>
               <h3 className="text-white font-semibold mb-2">Custom Graphics</h3>
               <p className="text-zinrai-muted text-sm">Logos, branding, social media graphics, and print materials</p>
             </div>
             <div className="bg-zinrai-surface rounded-xl p-6 border border-yellow-500/20 hover:border-yellow-500/40 transition-colors">
-              <div className="text-3xl mb-4">🎥</div>
+              <div className="w-8 h-8 bg-yellow-500/30 rounded-lg mb-4"></div>
               <h3 className="text-white font-semibold mb-2">Video Production</h3>
               <p className="text-zinrai-muted text-sm">Promotional videos, animations, and event coverage</p>
             </div>
             <div className="bg-zinrai-surface rounded-xl p-6 border border-yellow-500/20 hover:border-yellow-500/40 transition-colors">
-              <div className="text-3xl mb-4">📱</div>
+              <div className="w-8 h-8 bg-yellow-500/30 rounded-lg mb-4"></div>
               <h3 className="text-white font-semibold mb-2">Digital Assets</h3>
               <p className="text-zinrai-muted text-sm">Templates, mockups, and interactive content</p>
             </div>

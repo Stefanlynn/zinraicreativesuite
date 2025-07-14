@@ -272,7 +272,7 @@ export default function Home() {
             <div className="text-center py-24">
               <div className="max-w-md mx-auto">
                 <div className="bg-zinrai-surface rounded-3xl p-12 border border-zinrai-border">
-                  <div className="text-6xl mb-6">🚀</div>
+                  <div className="w-16 h-16 bg-zinrai-accent/30 rounded-full mx-auto mb-6"></div>
                   <h3 className="text-2xl font-bold text-white mb-4">Coming Soon</h3>
                   <p className="text-zinrai-muted text-lg mb-8">
                     The ZiNRAi Store is launching soon with exclusive merchandise and branded materials.
