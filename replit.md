@@ -58,6 +58,7 @@ Located in `shared/schema.ts`, the application uses four main tables:
 - **Added navigation** - "Back to Main Site" button on admin login page for better user experience
 - **Simplified project request form** - removed contact method field, kept only due date and email for streamlined submissions
 - **Removed thumbnail/cover photo feature** - simplified asset creation by removing upload functionality and using type-based icons instead
+- **Fixed admin session management** - sessions now properly persist and handle server restarts in development
 
 ### API Layer
 The backend provides RESTful endpoints for:
