@@ -161,14 +161,7 @@ export default function Home() {
       <section className="py-16 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Creative Excellence.
-              <br />
-              <span className="text-zinrai-accent">Delivered.</span>
-            </h1>
-            <p className="text-xl text-zinrai-muted max-w-3xl mx-auto mb-8">
-              Access our premium collection of creative assets designed to elevate your brand and amplify your message.
-            </p>
+            {/* Hero video will be the main focus */}
           </div>
           
           <div className="hero-video mb-16">
