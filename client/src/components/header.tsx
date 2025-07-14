@@ -65,7 +65,7 @@ export default function Header() {
             {/* Admin Button */}
             <button
               onClick={() => window.location.href = '/admin/login'}
-              className="ml-2 px-3 py-2 text-xs text-zinrai-muted/60 hover:text-zinrai-accent hover:bg-zinrai-accent/10 rounded-lg transition-all duration-200"
+              className="ml-2 px-3 py-2 text-xs text-zinrai-muted/60 hover:text-zinrai-muted rounded-lg transition-all duration-200"
             >
               Admin
             </button>

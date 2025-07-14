@@ -141,14 +141,14 @@ export default function Home() {
             <div className="flex items-center gap-4">
               <Button 
                 onClick={() => window.location.href = '/request-project'}
-                className="secondary-btn"
+                className="px-6 py-2.5 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-semibold rounded-lg hover:from-yellow-300 hover:to-yellow-400 transition-all duration-200 shadow-lg hover:shadow-yellow-500/25 transform hover:-translate-y-0.5"
               >
                 Request Project
               </Button>
               <Button 
                 onClick={() => window.location.href = '/admin/login'}
                 variant="ghost"
-                className="text-xs text-zinrai-muted hover:text-zinrai-accent"
+                className="text-xs text-zinrai-muted hover:text-zinrai-muted"
               >
                 Admin
               </Button>
