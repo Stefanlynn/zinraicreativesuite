@@ -389,8 +389,22 @@ export default function AdminDashboard() {
                   {editingItem ? 'Edit Asset' : 'Add New Asset'}
                 </CardTitle>
                 <CardDescription className="text-zinrai-muted">
-                  {editingItem ? 'Update the asset details' : 'Add a new asset with links to external files'}
+                  {editingItem ? 'Update the asset details' : 'Fill out all fields to create a complete content card that users will see'}
                 </CardDescription>
+                
+                {/* Field Guide */}
+                <div className="mt-4 p-4 bg-zinrai-dark rounded-lg border border-zinrai-border">
+                  <h4 className="text-sm font-semibold text-white mb-2">Content Card Fields Guide:</h4>
+                  <div className="text-xs text-zinrai-muted space-y-1">
+                    <div><strong>Title:</strong> Main heading displayed on content card</div>
+                    <div><strong>Category:</strong> Which tab the content appears under (Social Media, Field Tools, Events, Store)</div>
+                    <div><strong>Content Type:</strong> Badge shown on card (Video, Graphic, Template, Bundle, Mockup) + enables filtering</div>
+                    <div><strong>Featured:</strong> Adds yellow "Featured" badge to highlight important content</div>
+                    <div><strong>Description:</strong> Subtitle text shown under title (optional but recommended)</div>
+                    <div><strong>File URL:</strong> Direct link to file - opens in new tab when user clicks "Get File"</div>
+                    <div><strong>Thumbnail URL:</strong> Preview image (64x64px) shown on the left side of each content item</div>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent>
                 <Form {...form}>
@@ -401,10 +415,15 @@ export default function AdminDashboard() {
                         name="title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white">Title</FormLabel>
+                            <FormLabel className="text-white">Title *</FormLabel>
                             <FormControl>
-                              <Input {...field} className="form-input" />
+                              <Input 
+                                {...field} 
+                                className="form-input"
+                                placeholder="e.g., Instagram Story Template"
+                              />
                             </FormControl>
+                            <p className="text-xs text-zinrai-muted mt-1">This appears as the main heading on the content card</p>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -415,7 +434,7 @@ export default function AdminDashboard() {
                         name="category"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white">Category</FormLabel>
+                            <FormLabel className="text-white">Category *</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value}>
                               <FormControl>
                                 <SelectTrigger className="form-select">
@@ -429,6 +448,7 @@ export default function AdminDashboard() {
                                 <SelectItem value="store">Store</SelectItem>
                               </SelectContent>
                             </Select>
+                            <p className="text-xs text-zinrai-muted mt-1">Determines which tab the content appears under</p>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -439,7 +459,7 @@ export default function AdminDashboard() {
                         name="type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white">Type</FormLabel>
+                            <FormLabel className="text-white">Content Type *</FormLabel>
                             <Select onValueChange={field.onChange} value={field.value}>
                               <FormControl>
                                 <SelectTrigger className="form-select">
@@ -454,6 +474,7 @@ export default function AdminDashboard() {
                                 <SelectItem value="mockup">Mockup</SelectItem>
                               </SelectContent>
                             </Select>
+                            <p className="text-xs text-zinrai-muted mt-1">Shows as a badge on the content card and enables filtering</p>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -472,7 +493,10 @@ export default function AdminDashboard() {
                                 className="rounded border-zinrai-border"
                               />
                             </FormControl>
-                            <FormLabel className="text-white">Featured</FormLabel>
+                            <div>
+                              <FormLabel className="text-white">Featured Content</FormLabel>
+                              <p className="text-xs text-zinrai-muted">Shows a "Featured" badge on the content card</p>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -486,8 +510,13 @@ export default function AdminDashboard() {
                         <FormItem>
                           <FormLabel className="text-white">Description</FormLabel>
                           <FormControl>
-                            <Textarea {...field} className="form-textarea" />
+                            <Textarea 
+                              {...field} 
+                              className="form-textarea"
+                              placeholder="Brief description of the content (optional but recommended)"
+                            />
                           </FormControl>
+                          <p className="text-xs text-zinrai-muted mt-1">Appears as subtitle text on the content card</p>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -498,7 +527,7 @@ export default function AdminDashboard() {
                       name="fileUrl"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white">File URL (Dropbox/Google Drive)</FormLabel>
+                          <FormLabel className="text-white">File URL (Dropbox/Google Drive) *</FormLabel>
                           <FormControl>
                             <Input 
                               {...field} 
@@ -506,6 +535,7 @@ export default function AdminDashboard() {
                               placeholder="https://drive.google.com/... or https://dropbox.com/..."
                             />
                           </FormControl>
+                          <p className="text-xs text-zinrai-muted mt-1">Direct link to the actual file - opens when user clicks "Get File"</p>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -516,7 +546,7 @@ export default function AdminDashboard() {
                       name="thumbnailUrl"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white">Thumbnail URL</FormLabel>
+                          <FormLabel className="text-white">Thumbnail Image URL *</FormLabel>
                           <FormControl>
                             <Input 
                               {...field} 
@@ -524,6 +554,7 @@ export default function AdminDashboard() {
                               placeholder="https://example.com/thumbnail.jpg"
                             />
                           </FormControl>
+                          <p className="text-xs text-zinrai-muted mt-1">Preview image shown on the content card (64x64px on list)</p>
                           <FormMessage />
                         </FormItem>
                       )}
