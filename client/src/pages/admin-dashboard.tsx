@@ -428,9 +428,7 @@ export default function AdminDashboard() {
                           <p className="text-sm text-white">
                             <span className="font-medium">Project:</span> {request.projectType}
                           </p>
-                          <p className="text-sm text-zinrai-muted">
-                            <span className="font-medium">Timeline:</span> {request.timeline}
-                          </p>
+
                           <p className="text-sm text-zinrai-muted">
                             <span className="font-medium">Due Date:</span> {request.dueDate ? new Date(request.dueDate).toLocaleDateString() : 'Not specified'}
                           </p>

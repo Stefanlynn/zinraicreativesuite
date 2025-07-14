@@ -27,7 +27,6 @@ export const projectRequests = pgTable("project_requests", {
   fullName: text("full_name").notNull(),
   email: text("email").notNull(),
   projectType: text("project_type").notNull(),
-  timeline: text("timeline").notNull(),
   dueDate: date("due_date").notNull(),
   description: text("description").notNull(),
   contactMethod: text("contact_method").notNull(),

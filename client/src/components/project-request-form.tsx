@@ -16,7 +16,6 @@ const projectRequestSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   projectType: z.string().min(1, "Please select a project type"),
-  timeline: z.string().min(1, "Please select a timeline"),
   dueDate: z.string().min(1, "Please select a due date").refine((date) => {
     const selectedDate = new Date(date);
     const threeWeeksFromNow = new Date();
@@ -39,7 +38,6 @@ export default function ProjectRequestForm() {
       fullName: "",
       email: "",
       projectType: "",
-      timeline: "",
       dueDate: "",
       description: "",
       contactMethod: "email",
@@ -54,7 +52,6 @@ export default function ProjectRequestForm() {
       formData.append('full-name', data.fullName);
       formData.append('email', data.email);
       formData.append('project-type', data.projectType);
-      formData.append('timeline', data.timeline);
       formData.append('due-date', data.dueDate);
       formData.append('description', data.description);
       formData.append('contact-method', data.contactMethod);
@@ -126,7 +123,6 @@ export default function ProjectRequestForm() {
                 <input type="hidden" name="full-name" />
                 <input type="hidden" name="email" />
                 <input type="hidden" name="project-type" />
-                <input type="hidden" name="timeline" />
                 <input type="hidden" name="due-date" />
                 <input type="hidden" name="description" />
                 <input type="hidden" name="contact-method" />
@@ -190,30 +186,6 @@ export default function ProjectRequestForm() {
                             <SelectItem value="event-materials">Event Materials</SelectItem>
                             <SelectItem value="brand-merchandise">Brand Merchandise</SelectItem>
                             <SelectItem value="other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="timeline"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-white">Timeline</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger className="form-select">
-                              <SelectValue placeholder="Select timeline" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-white border-gray-300 text-black">
-                            <SelectItem value="rush">Rush (1-3 days)</SelectItem>
-                            <SelectItem value="standard">Standard (1-2 weeks)</SelectItem>
-                            <SelectItem value="extended">Extended (2-4 weeks)</SelectItem>
-                            <SelectItem value="flexible">Flexible</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
