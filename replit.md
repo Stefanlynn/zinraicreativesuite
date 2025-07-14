@@ -31,9 +31,14 @@ Design preference: Apple-meets-creativity aesthetic with clean, modern interface
 ### Database Schema
 Located in `shared/schema.ts`, the application uses four main tables:
 - **users**: User authentication and management
-- **content_items**: Creative assets (graphics, videos, templates, etc.)
+- **content_items**: Creative assets (graphics, videos, templates, etc.) - now supports 'general' category
 - **project_requests**: Custom project requests from users
 - **downloads**: Download tracking and analytics
+
+### Recent Updates (2025-01-14)
+- Added "General" category as first option before Social Media
+- Updated admin dashboard to use file upload for thumbnails instead of URL input
+- Fixed admin login credentials - changed from demo to actual credentials
 
 ### API Layer
 The backend provides RESTful endpoints for:
@@ -63,12 +68,13 @@ The backend provides RESTful endpoints for:
 
 ### Authentication
 - Simple session-based authentication system
-- Demo credentials: admin/admin123
+- Credentials: andre.butler@zinrai.com / 6September2008
 - Session tokens stored in localStorage
 - Admin routes protected with middleware
 
 ### Content Management
 - Add new assets with external file URLs (Dropbox/Google Drive links)
+- Upload thumbnail images directly (replaces URL input)
 - Edit existing content items (title, description, category, type, URLs)
 - Delete content items with confirmation
 - Toggle featured status for content

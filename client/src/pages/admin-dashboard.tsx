@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,7 +31,7 @@ import type { ContentItem, ProjectRequest } from '@/lib/types';
 const contentItemSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
-  category: z.enum(['social-media', 'field-tools', 'events', 'store']),
+  category: z.enum(['general', 'social-media', 'field-tools', 'events', 'store']),
   type: z.enum(['video', 'graphic', 'template', 'bundle', 'mockup']),
   fileUrl: z.string().url('Must be a valid URL'),
   thumbnailUrl: z.string().url('Must be a valid URL'),
@@ -44,6 +44,9 @@ export default function AdminDashboard() {
   const [location, setLocation] = useLocation();
   const [editingItem, setEditingItem] = useState<ContentItem | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -60,13 +63,57 @@ export default function AdminDashboard() {
     defaultValues: {
       title: '',
       description: '',
-      category: 'social-media',
+      category: 'general',
       type: 'graphic',
       fileUrl: '',
       thumbnailUrl: '',
       featured: false,
     },
   });
+
+  const handleThumbnailUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast({
+          title: "File too large",
+          description: "Please select an image smaller than 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: "Invalid file type",
+          description: "Please select an image file",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      setThumbnailFile(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setThumbnailPreview(result);
+        // For now, we'll use a placeholder URL in the form
+        // In a real app, you'd upload to a service like Cloudinary
+        form.setValue('thumbnailUrl', `https://placeholder.com/thumbnail-${Date.now()}.jpg`);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const resetForm = () => {
+    form.reset();
+    setThumbnailFile(null);
+    setThumbnailPreview('');
+    setEditingItem(null);
+    setShowAddForm(false);
+  };
 
   // Fetch content items
   const { data: contentItems, isLoading: contentLoading } = useQuery({
@@ -104,8 +151,7 @@ export default function AdminDashboard() {
         title: "Success",
         description: "Content item created successfully",
       });
-      setShowAddForm(false);
-      form.reset();
+      resetForm();
     },
     onError: (error: any) => {
       toast({
@@ -199,11 +245,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const resetForm = () => {
-    setEditingItem(null);
-    setShowAddForm(false);
-    form.reset();
-  };
+
 
   return (
     <div className="min-h-screen bg-zinrai-dark">
@@ -404,7 +446,7 @@ export default function AdminDashboard() {
                     <div><strong>Featured:</strong> Adds yellow "Featured" badge to highlight important content</div>
                     <div><strong>Description:</strong> Subtitle text shown under title (optional but recommended)</div>
                     <div><strong>File URL:</strong> Direct link to file - opens in new tab when user clicks "Get File"</div>
-                    <div><strong>Thumbnail URL:</strong> Preview image (64x64px) shown on the left side of each content item</div>
+                    <div><strong>Thumbnail Image:</strong> Upload preview image (64x64px) shown on the left side of each content item</div>
                   </div>
                 </div>
               </CardHeader>
@@ -444,6 +486,7 @@ export default function AdminDashboard() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
+                                <SelectItem value="general">General</SelectItem>
                                 <SelectItem value="social-media">Social Media</SelectItem>
                                 <SelectItem value="field-tools">Field Tools</SelectItem>
                                 <SelectItem value="events">Events</SelectItem>
@@ -543,24 +586,39 @@ export default function AdminDashboard() {
                       )}
                     />
 
-                    <FormField
-                      control={form.control}
-                      name="thumbnailUrl"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Thumbnail Image URL *</FormLabel>
-                          <FormControl>
-                            <Input 
-                              {...field} 
-                              className="form-input"
-                              placeholder="https://example.com/thumbnail.jpg"
-                            />
-                          </FormControl>
-                          <p className="text-xs text-zinrai-muted mt-1">Preview image shown on the content card (64x64px on list)</p>
-                          <FormMessage />
-                        </FormItem>
+                    <div className="space-y-2">
+                      <label className="text-white font-medium">Thumbnail Image *</label>
+                      <div className="flex items-center gap-4">
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleThumbnailUpload}
+                          accept="image/*"
+                          className="hidden"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="border-zinrai-border text-zinrai-muted hover:text-zinrai-accent hover:border-zinrai-accent"
+                        >
+                          Upload Image
+                        </Button>
+                        {thumbnailFile && (
+                          <span className="text-sm text-zinrai-muted">
+                            {thumbnailFile.name}
+                          </span>
+                        )}
+                      </div>
+                      {thumbnailPreview && (
+                        <img
+                          src={thumbnailPreview}
+                          alt="Thumbnail preview"
+                          className="w-16 h-16 object-cover rounded border border-zinrai-border"
+                        />
                       )}
-                    />
+                      <p className="text-xs text-zinrai-muted">Preview image shown on the content card (64x64px on list)</p>
+                    </div>
 
                     <div className="flex justify-end gap-3">
                       <Button
